@@ -388,7 +388,7 @@ namespace MySqlConnector.Core
 			}
 			else if (pool != newPool && Log.IsInfoEnabled())
 			{
-				Log.Info("Pool{0} was created but will not be used (due to race)", newPool.m_logArguments[0]);
+				Log.Info("Pool{0} was created but will not be used (due to race)", newPool.m_logArguments);
 			}
 
 			return pool;
@@ -436,7 +436,7 @@ namespace MySqlConnector.Core
 			Id = Interlocked.Increment(ref s_poolId);
 			m_logArguments = new object[] { "Pool{0}".FormatInvariant(Id) };
 			if (Log.IsInfoEnabled())
-				Log.Info("Pool{0} creating new connection pool for ConnectionString{1}", m_logArguments[0], cs.ConnectionStringBuilder.GetConnectionString(includePassword: false));
+				Log.Info("Pool{0} creating new connection pool for ConnectionString: {1}", m_logArguments[0], cs.ConnectionStringBuilder.GetConnectionString(includePassword: false));
 
 			if (cs.ConnectionIdleTimeout > 0)
 			{
