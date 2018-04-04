@@ -31,7 +31,7 @@ namespace MySqlConnector.Logging
 				else
 				{
 					// rewrite message as template
-					var template = tokenReplacer.Replace(message, $"{{{m_name}A$1}}");
+					var template = tokenReplacer.Replace(message, "$1{MySql$2$3}$4");
 					m_logger.Write(GetLevel(level), exception, template, args);
 				}
 			}
@@ -57,7 +57,7 @@ namespace MySqlConnector.Logging
 				}
 			}
 
-			static readonly Regex tokenReplacer = new Regex(@"\{(\d+)\}", RegexOptions.Compiled);
+			static readonly Regex tokenReplacer = new Regex(@"((\w+)?\s?(?:=|:)?\s?'?)\{(?:\d+)(\:\w+)?\}('?)", RegexOptions.Compiled);
 
 			readonly ILogger m_logger;
 			readonly string m_name;
